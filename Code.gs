@@ -85,9 +85,9 @@ function doGet(request){
        msg=set_like(command,user,0)
      } else if(command_type=="rename"){
        msg=rename_level(command,user) 
-     } else if(command_type=="addtags"){
+     } else if(command_type=="oldaddtags"){
        msg=add_tags(command,user)
-     } else if(command_type=="addtagsnew"){
+     } else if(command_type=="addtags"){
        msg=add_tags_new(command,user)
      } else if(command_type=="removetags"){
        msg=remove_tags(command,user)
@@ -200,13 +200,14 @@ function add_tags_new(level_info,user){
     }
   }
 
-  //Then we trim the new tags, check if they exist in all tags (lower cased and spaces removed) and if they do we use that writing style instead
+
+  //Then we trim the new tags, check if they exist in all tags (lower cased) and if they do we use that writing style instead
   var new_tags=par.level_info.trim().split(",")
-  for(var i = 0; i < new_tags.length, i++){
+  for(var i = 0; i < new_tags.length; i++){
     new_tags[i] = new_tags[i].trim();
 
     for(var j = 0; j < all_tags.length; j++){
-      if(new_tags[i].toLowerCase().replace(" ", "") == all_tags[j].toLowerCase().replace(" ", "")){
+      if(new_tags[i].toLowerCase() == all_tags[j].toLowerCase()){
         new_tags[i] = all_tags[j];
       }
     }
@@ -861,4 +862,3 @@ function valid_difficulty(str){
   }
   return false;
 }
-
