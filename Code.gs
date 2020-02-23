@@ -206,7 +206,7 @@ function add_tags_new(level_info,user){
     new_tags[i] = new_tags[i].trim();
 
     for(var j = 0; j < all_tags.length; j++){
-      if(new_tags[i].toLowerCase() == all_tags[j].toLowerCase()){
+      if(new_tags[i].toLowerCase().replace(" ") == all_tags[j].toLowerCase().replace(" ")){
         new_tags[i] = all_tags[j];
       }
     }
