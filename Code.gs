@@ -200,6 +200,7 @@ function add_tags_new(level_info,user){
     }
   }
 
+
   //Then we trim the new tags, check if they exist in all tags (lower cased) and if they do we use that writing style instead
   var new_tags=par.level_info.trim().split(",")
   for(var i = 0; i < new_tags.length; i++){
