@@ -87,6 +87,8 @@ function doGet(request){
        msg=rename_level(command,user) 
      } else if(command_type=="addtags"){
        msg=add_tags(command,user)
+     } else if(command_type=="addtagsnew"){
+       msg=add_tags_new(command,user)
      } else if(command_type=="removetags"){
        msg=remove_tags(command,user)
      } else if(command_type=="addvods"){
@@ -159,6 +161,58 @@ function add_tags(level_info,user){
   
   var current_tags=existing_level.Tags?existing_level.Tags.split(","):[]
   var new_tags=par.level_info.trim().split(",")
+  var updated=false;
+  for(var i=0;i<new_tags.length;i++){
+    if(current_tags.indexOf(new_tags[i].trim())===-1){
+      current_tags.push(new_tags[i].trim())
+      updated=true;
+    }
+  }
+  
+  if(updated){
+    gs_query(levelSheet,{
+      filter:{"Code":existing_level.Code},
+      update:{"Tags":current_tags.join(",")}
+    })
+  }
+  
+  return existing_level["Level Name"]+" is tagged *"+current_tags.join(",")+"*."+ (updated?"":" No new tags added")
+}
+
+function add_tags_new(level_info,user){
+  var par=parse_level_code(level_info)
+  if(par.error) return par.error
+  
+  var existing_level=gs_select(levelSheet,{"Code":par.level_code})
+  if(!existing_level) return "Level code was not found in Team Shell's list "+emotes.think;
+
+  //First we get all available tags
+  var all_levels = gs_select(levelSheet);
+  var all_tags = [];
+  for(var i = 0; i < all_levels.length; i++){
+    if(all_levels[i].Tags){
+      var found_tags = all_levels[i].Tags.split(",");
+      for(var j = 0; j < found_tags.length; j++){
+        if(all_tags.indexOf(found_tags[j]) === -1){
+          all_tags.push(found_tags[j]);
+        }
+      }
+    }
+  }
+
+  //Then we trim the new tags, check if they exist in all tags (lower cased) and if they do we use that writing style instead
+  var new_tags=par.level_info.trim().split(",")
+  for(var i = 0; i < new_tags.length, i++){
+    new_tags[i] = new_tags[i].trim();
+
+    for(var j = 0; j < all_tags.length; j++){
+      if(new_tags[i].toLowerCase() == all_tags[j].toLowerCase()){
+        new_tags[i] = all_tags[j];
+      }
+    }
+  }
+  
+  var current_tags=existing_level.Tags?existing_level.Tags.split(","):[]
   var updated=false;
   for(var i=0;i<new_tags.length;i++){
     if(current_tags.indexOf(new_tags[i].trim())===-1){
