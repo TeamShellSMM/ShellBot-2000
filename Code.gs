@@ -571,7 +571,7 @@ function remove_level(level_info,user){
     return "The level has already been removed"+emotes.think;
   }
   
-  if(user.shelder || user.Name==existing_level.Creator){
+  if( !(user.shelder || user.Name==existing_level.Creator) ){
     return "You can't remove this level"+emotes.think;
   }
   
@@ -755,6 +755,7 @@ function calculatePoints(user_id){
     if(userCleared[id]) clearPoints+=userCleared[id]
   }
 
+   
    
   return {
     clearPoints:clearPoints,
