@@ -492,14 +492,19 @@ function set_difficulty(level_info,user){
       })
     }
   } 
+
+  var updateJson = {
+    "Difficulty Vote":difficulty_rating?parseFloat(difficulty_rating):'',
+    "Timestamp":RUN_TIME
+  };
+
+  if(liked){
+    updateJson["Liked"] = 1;
+  }
   
   var existing_play=gs_query(playedSheet,{
         filter:{"Code":par.level_code,"Player":user.Name},
-        update:{
-          "Liked":liked?1:0,
-          "Difficulty Vote":difficulty_rating?parseFloat(difficulty_rating):'',
-          "Timestamp":RUN_TIME
-        } 
+        update: updateJson
     })
   
   var ret=""
