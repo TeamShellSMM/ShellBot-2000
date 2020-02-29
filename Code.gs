@@ -438,8 +438,8 @@ function add_played(level_info,user,not_cleared){
     ret+=(difficulty_rating?"You voted "+difficulty_rating+" as the difficulty. ":"")
    if(existing_level.Approved=="1"){
     ret+="You have earned "+pointMap[parseFloat(existing_level.Difficulty)]+" points. ";     
-   } else if(existing_level.Approved=="0" && approve){
-    ret+="You have approved this level. ";     
+ //} else if(existing_level.Approved=="0" && approve){
+ // ret+="You have approved this level. ";     
    } else if(existing_level.Approved=="0"){
     ret+="This level is still pending. "
    }
