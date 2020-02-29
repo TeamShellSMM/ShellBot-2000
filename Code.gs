@@ -385,7 +385,7 @@ function add_played(level_info,user,not_cleared){
  
   var existing_play=gs_select(playedSheet,{"Code":par.level_code,"Player":user.Name})
   var creator=gs_select(memberSheet,{"Name":existing_level.Creator})
-  
+  /*
   if(user.shelder && existing_level.Approved=="0" && difficulty_rating){      //still pending
     var approve=gs_query(levelSheet,{
       filter:{"Code":par.level_code},
@@ -397,7 +397,7 @@ function add_played(level_info,user,not_cleared){
         update:{"cult_member":"1"}
       })
     }
-  } 
+  } */
   
   if(existing_play){
     if(existing_play.Completed=="1"){
@@ -480,6 +480,7 @@ function set_difficulty(level_info,user){
   }
   
   var creator=gs_select(memberSheet,{"Name":existing_level.Creator})
+  /*
   if(user.shelder && difficulty_rating){      //still pending
     var approve=gs_query(levelSheet,{
       filter:{"Code":par.level_code},
@@ -491,7 +492,7 @@ function set_difficulty(level_info,user){
         update:{"cult_member":"1"}
       })
     }
-  } 
+  } */
 
   var updateJson = {
     "Difficulty Vote":difficulty_rating?parseFloat(difficulty_rating):'',
